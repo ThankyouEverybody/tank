@@ -13,17 +13,13 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     public TankFrame() {
-
-        Frame f = new Frame();
-        f.setSize(800,600);
-        f.setResizable(false);
-        f.setTitle("tank war");
-        f.setVisible(true);
-        f.addWindowListener(new WindowAdapter() {
-
+        this.setSize(800,600);
+        this.setResizable(false);
+        this.setTitle("tank war");
+        this.setVisible(true);
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
                 System.exit(0);
             }
         });
@@ -32,5 +28,6 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         System.out.println("paint");
+        g.fillRect(200,200,50,50);
     }
 }
