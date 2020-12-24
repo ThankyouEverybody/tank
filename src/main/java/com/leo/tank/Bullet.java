@@ -40,14 +40,27 @@ public class Bullet {
      * 当前frame的引用
      */
     private TankFrame tankFrame = null;
+    /**
+     * 子弹分组
+     */
+    protected Group group;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tankFrame) {
-
+    public Bullet(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tankFrame = tankFrame;
+        this.group = group;
     }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
 
     public void paint(Graphics g) {
         if (!live) {
@@ -98,6 +111,10 @@ public class Bullet {
      * 碰撞检测
      */
     public void collideWith(Tank tank) {
+        if (this.group == tank.group) {
+            return;
+        }
+
         Rectangle rectBullet = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
         Rectangle rectTank = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
         if (rectBullet.intersects(rectTank)) {

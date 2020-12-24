@@ -15,7 +15,7 @@ import java.util.List;
  * @Description 封装继承多态 哈哈
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 400, Dir.DOWN, this);
+    Tank myTank = new Tank(200, 400, Dir.DOWN, this,Group.GOOD);
     List<Bullet> bullets = new ArrayList<>();
 
     List<Tank> tanks = new ArrayList<>();

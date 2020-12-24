@@ -3,6 +3,7 @@ package com.leo.tank;
 import com.leo.tank.TankFrame;
 
 import java.awt.*;
+import java.util.Random;
 
 
 /**
@@ -27,7 +28,7 @@ public class Tank {
     /**
      * 是否移动
      */
-    private boolean moving = false;
+    private boolean moving = true;
     /**
      * 宽度
      */
@@ -44,6 +45,22 @@ public class Tank {
      * 当前frame的引用.
      */
     private TankFrame tankFrame = null;
+    /**
+     * 随机换方向
+     */
+    private Random random = new Random();
+    /**
+     * 坦克分组
+     */
+    protected Group group;
+
+    public Tank(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.tankFrame = tankFrame;
+        this.group = group;
+    }
 
     public void setDir(Dir dir) {
         this.dir = dir;
@@ -73,12 +90,15 @@ public class Tank {
         this.y = y;
     }
 
-    public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.tankFrame = tankFrame;
+    public Group getGroup() {
+        return group;
     }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+
 
     /**
      * 画坦克
@@ -130,6 +150,10 @@ public class Tank {
             default:
                 break;
         }
+        if (random.nextInt(10) > 8) {
+
+            this.fire();
+        }
     }
 
     /**
@@ -141,7 +165,7 @@ public class Tank {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bullets.add(new Bullet(bX, bY, this.dir, tankFrame));
+        tankFrame.bullets.add(new Bullet(bX, bY, this.dir, tankFrame, this.group));
     }
 
     public void die() {
