@@ -93,5 +93,20 @@ public class Bullet {
             live = false;
         }
     }
+    /**
+     * 子弹与坦克相撞
+     * 碰撞检测
+     */
+    public void collideWith(Tank tank) {
+        Rectangle rectBullet = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+        Rectangle rectTank = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+        if (rectBullet.intersects(rectTank)) {
+            this.die();
+            tank.die();
+        }
+    }
 
+    private void die() {
+        this.live = false;
+    }
 }
