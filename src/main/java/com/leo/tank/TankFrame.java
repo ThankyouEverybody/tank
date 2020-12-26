@@ -16,9 +16,14 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
     Tank myTank = new Tank(200, 400, Dir.DOWN, this,Group.GOOD);
+
     List<Bullet> bullets = new ArrayList<>();
 
     List<Tank> tanks = new ArrayList<>();
+
+
+    Explode e = new Explode(100, 100, this);
+
     static final int GAME_WIDTH = 800;
 
     static final int GAME_HEIGHT = 600;
@@ -71,6 +76,8 @@ public class TankFrame extends Frame {
         g.setColor(color);
         myTank.paint(g);
 
+        e.paint(g);
+
         /**
          * 这种方式在删除子弹的时候回出现
          * java.util.ConcurrentModificationException
@@ -89,9 +96,12 @@ public class TankFrame extends Frame {
                 iterator.remove();
             }
         }*/
+
+        //敌人坦克
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
+        //碰撞监测
         for (int i = 0; i < bullets.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {
                 bullets.get(i).collideWith(tanks.get(j));
@@ -173,16 +183,14 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-
             if (!bL && !bU && !bR && !bD) {
                 myTank.setMoving(false);
                 return;
             }
-
             myTank.setMoving(true);
 
             if (bL) {
-                myTank.setDir(Dir.Left);
+                myTank.setDir(Dir.LEFT);
             }
             if (bU) {
                 myTank.setDir(Dir.UP);

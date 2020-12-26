@@ -1,7 +1,5 @@
 package com.leo.tank;
 
-import com.leo.tank.TankFrame;
-
 import java.awt.*;
 
 /**
@@ -67,7 +65,7 @@ public class Bullet {
             tankFrame.bullets.remove(this);
         }
         switch (dir) {
-            case Left:
+            case LEFT:
                 g.drawImage(ResourceMgr.bulletL, x, y, null);
                 break;
             case UP:
@@ -87,7 +85,7 @@ public class Bullet {
 
     private void move() {
         switch (dir) {
-            case Left:
+            case LEFT:
                 x -= SPEED;
                 break;
             case UP:

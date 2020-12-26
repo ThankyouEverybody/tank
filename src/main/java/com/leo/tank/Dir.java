@@ -7,5 +7,5 @@ package com.leo.tank;
  * @Description 方向枚举
  */
 public enum Dir {
-    Left,UP,RIGHT,DOWN
+    LEFT,UP,RIGHT,DOWN
 }

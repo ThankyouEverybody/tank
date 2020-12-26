@@ -1,7 +1,5 @@
 package com.leo.tank;
 
-import com.leo.tank.TankFrame;
-
 import java.awt.*;
 import java.util.Random;
 
@@ -32,11 +30,11 @@ public class Tank {
     /**
      * 宽度
      */
-    public static final int WIDTH  = ResourceMgr.tankL.getWidth();
+    public static final int WIDTH  = ResourceMgr.goodTankL.getWidth();
     /**
      * 高度
      */
-    public static final int HEIGHT = ResourceMgr.tankL.getHeight();
+    public static final int HEIGHT = ResourceMgr.goodTankL.getHeight();
     /**
      * 是否存活
      */
@@ -108,21 +106,18 @@ public class Tank {
             tankFrame.tanks.remove(this);
             return;
         }
-        switch (dir) {
-            case Left:
-                g.drawImage(ResourceMgr.tankL, x, y, null);
+        switch(dir) {
+            case LEFT:
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, x, y, null);
-
-                break;
-            default:
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
         }
         move(dir);
@@ -135,7 +130,7 @@ public class Tank {
             return;
         }
         switch (dir) {
-            case Left:
+            case LEFT:
                 x -= SPEED;
                 break;
             case UP:
@@ -150,8 +145,7 @@ public class Tank {
             default:
                 break;
         }
-        if (random.nextInt(10) > 8) {
-
+        if (this.group == Group.BAD && random.nextInt(10) > 8) {
             this.fire();
         }
     }
@@ -166,6 +160,9 @@ public class Tank {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
         tankFrame.bullets.add(new Bullet(bX, bY, this.dir, tankFrame, this.group));
+        if(this.group == Group.GOOD) {
+            new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        }
     }
 
     public void die() {
