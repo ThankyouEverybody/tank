@@ -1,5 +1,8 @@
 package com.leo.tank;
 
+import com.leo.tank.strategy.DefaultFireStrategy;
+import com.leo.tank.strategy.FireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -15,11 +18,12 @@ public class Tank {
     /**
      * 位置坐标
      */
-    private int  x, y;
+    public int  x;
+    public int y;
     /**
      * 方向
      */
-    private Dir dir = Dir.DOWN;
+    public Dir dir = Dir.DOWN;
     /**
      * 移动速度
      */
@@ -43,7 +47,7 @@ public class Tank {
     /**
      * 当前frame的引用.
      */
-    private TankFrame tankFrame = null;
+    public TankFrame tankFrame = null;
     /**
      * 随机换方向
      */
@@ -51,7 +55,7 @@ public class Tank {
     /**
      * 坦克分组
      */
-    protected Group group;
+    public Group group;
     /**
      * 用于碰撞检测
      */
@@ -162,7 +166,8 @@ public class Tank {
 
 
         if (this.group == Group.BAD && random.nextInt(10) > 8) {
-            this.fire();
+            this.fire(DefaultFireStrategy.getInstance());
+
         }
         if (this.group == Group.BAD && random.nextInt(100) > 95) {
             randomDir();
@@ -213,14 +218,10 @@ public class Tank {
      * @author Leo
      * @date 2020/12/24 2:04 下午
      * @return void
+     * @param fireStrategy
      */
-    public void fire() {
-            int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-            int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bullets.add(new Bullet(bX, bY, this.dir, tankFrame, this.group));
-        if(this.group == Group.GOOD) {
-            new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
-        }
+    public void fire(FireStrategy fireStrategy) {
+        fireStrategy.fire(this);
     }
 
     public void die() {

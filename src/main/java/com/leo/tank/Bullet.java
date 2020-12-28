@@ -57,9 +57,8 @@ public class Bullet {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
-
-
-
+        //每次new一个子弹的时候直接加入到bullets中.
+        tankFrame.bullets.add(this);
     }
 
     public Group getGroup() {

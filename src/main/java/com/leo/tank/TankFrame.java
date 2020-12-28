@@ -1,5 +1,8 @@
 package com.leo.tank;
 
+import com.leo.tank.strategy.DefaultFireStrategy;
+import com.leo.tank.strategy.FourDirFireStrategy;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -176,7 +179,13 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_SPACE:
-                    myTank.fire();
+                    myTank.fire(DefaultFireStrategy.getInstance());
+                    break;
+                case KeyEvent.VK_META:
+                    myTank.fire(FourDirFireStrategy.getInstance());
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire(FourDirFireStrategy.getInstance());
                     break;
                 default:
                     break;
