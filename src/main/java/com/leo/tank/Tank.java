@@ -11,6 +11,7 @@ import java.util.Random;
  * @Description 坦克封装
  */
 public class Tank {
+
     /**
      * 位置坐标
      */
@@ -22,7 +23,7 @@ public class Tank {
     /**
      * 移动速度
      */
-    private static final int SPEED = 5;
+    private static final int SPEED = Integer.parseInt((String) (PropertyMgr.get("tankSpeed")));
     /**
      * 是否移动
      */
@@ -51,6 +52,10 @@ public class Tank {
      * 坦克分组
      */
     protected Group group;
+    /**
+     * 用于碰撞检测
+     */
+    protected Rectangle rect = new Rectangle();
 
     public Tank(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
         this.x = x;
@@ -58,6 +63,11 @@ public class Tank {
         this.dir = dir;
         this.tankFrame = tankFrame;
         this.group = group;
+
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public void setDir(Dir dir) {
@@ -129,6 +139,10 @@ public class Tank {
         if (!moving) {
             return;
         }
+        if (!live) {
+            return;
+        }
+
         switch (dir) {
             case LEFT:
                 x -= SPEED;
@@ -145,9 +159,53 @@ public class Tank {
             default:
                 break;
         }
+
+
         if (this.group == Group.BAD && random.nextInt(10) > 8) {
             this.fire();
         }
+        if (this.group == Group.BAD && random.nextInt(100) > 95) {
+            randomDir();
+        }
+        boundsCheck();
+
+        //update  rect
+        rect.x = this.x;
+        rect.y = this.y;
+    }
+
+    /**
+     * 功能描述 : 坦克边界监测
+     * @author Leo
+     * @date 2020/12/26 9:12 下午
+     * @param
+     * @throw
+     * @return void
+     */
+    private void boundsCheck() {
+        if (this.x < 0) {
+            x = 0;
+        }
+        if (this.y < 20) {
+            y = 20;
+        }
+        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH) {
+            x = TankFrame.GAME_WIDTH - Tank.WIDTH;
+        }
+        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT) {
+            y = TankFrame.GAME_HEIGHT - Tank.HEIGHT;
+        }
+
+    }
+
+    /**
+     * 功能描述 : 随机方向
+     * @author Leo
+     * @date 2020/12/26 8:57 下午
+     * @return void
+     */
+    private void randomDir() {
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     /**
@@ -157,8 +215,8 @@ public class Tank {
      * @return void
      */
     public void fire() {
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+            int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+            int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
         tankFrame.bullets.add(new Bullet(bX, bY, this.dir, tankFrame, this.group));
         if(this.group == Group.GOOD) {
             new Thread(()->new Audio("audio/tank_fire.wav").play()).start();

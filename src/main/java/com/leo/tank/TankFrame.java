@@ -21,12 +21,11 @@ public class TankFrame extends Frame {
 
     List<Tank> tanks = new ArrayList<>();
 
+    List<Explode> explodes = new ArrayList<>();
 
-    Explode e = new Explode(100, 100, this);
+    static final int GAME_WIDTH = Integer.parseInt((String) (PropertyMgr.get("gameWidth")));
 
-    static final int GAME_WIDTH = 800;
-
-    static final int GAME_HEIGHT = 600;
+    static final int GAME_HEIGHT = Integer.parseInt((String) (PropertyMgr.get("gameHeight")));
 
     public TankFrame() {
         this.setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -72,11 +71,10 @@ public class TankFrame extends Frame {
         Color color = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("子弹数量:" + bullets.size(), 10, 60);
-        g.drawString("敌人数量:" + tanks.size(), 10, 90);
+        g.drawString("敌人数量:" + tanks.size(), 10, 80);
+        g.drawString("爆炸数量:" + explodes.size(), 10, 100);
         g.setColor(color);
         myTank.paint(g);
-
-        e.paint(g);
 
         /**
          * 这种方式在删除子弹的时候回出现
@@ -101,6 +99,10 @@ public class TankFrame extends Frame {
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
+
         //碰撞监测
         for (int i = 0; i < bullets.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {

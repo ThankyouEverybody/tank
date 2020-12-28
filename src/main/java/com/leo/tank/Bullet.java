@@ -13,7 +13,7 @@ public class Bullet {
     /**
      * 移动速度
      */
-    private static final int SPEED = 15;
+    private static final int SPEED = Integer.parseInt((String) (PropertyMgr.get("bulletSpeed")));
     /**
      * 宽度
      */
@@ -42,6 +42,10 @@ public class Bullet {
      * 子弹分组
      */
     protected Group group;
+    /**
+     * 用于碰撞检测
+     */
+    Rectangle rect = new Rectangle();
 
     public Bullet(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
         this.x = x;
@@ -49,6 +53,13 @@ public class Bullet {
         this.dir = dir;
         this.tankFrame = tankFrame;
         this.group = group;
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
+
+
+
     }
 
     public Group getGroup() {
@@ -100,6 +111,11 @@ public class Bullet {
             default:
                 break;
         }
+
+        //update rect
+        rect.x = this.x;
+        rect.y = this.y;
+
         if (x < 0 || y < 0 || TankFrame.GAME_WIDTH < x || TankFrame.GAME_HEIGHT < y) {
             live = false;
         }
@@ -112,12 +128,12 @@ public class Bullet {
         if (this.group == tank.group) {
             return;
         }
-
-        Rectangle rectBullet = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rectTank = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-        if (rectBullet.intersects(rectTank)) {
+        if (rect.intersects(tank.rect)) {
             this.die();
             tank.die();
+            int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+            int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+            tankFrame.explodes.add(new Explode(eX, eY, tankFrame));
         }
     }
 
