@@ -4,6 +4,8 @@ import com.leo.tank.Audio;
 import com.leo.tank.Bullet;
 import com.leo.tank.Group;
 import com.leo.tank.Tank;
+import com.leo.tank.abstractfactory.DefaultFactory;
+import com.leo.tank.abstractfactory.GameFactory;
 
 /**
  * @author Leo
@@ -12,7 +14,9 @@ import com.leo.tank.Tank;
  * @Description 普通子弹
  */
 public class DefaultFireStrategy implements FireStrategy {
-    private static DefaultFireStrategy fireStrategy;
+
+    GameFactory gameFactory = DefaultFactory.getInstance();
+    private static volatile DefaultFireStrategy fireStrategy;
     private DefaultFireStrategy() {
 
     }
@@ -39,7 +43,7 @@ public class DefaultFireStrategy implements FireStrategy {
     public void fire(Tank tank) {
         int bX = tank.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = tank.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        new Bullet(bX, bY, tank.dir, tank.tankFrame, tank.group);
+        gameFactory.createBullet(bX, bY, tank.dir, tank.tankFrame, tank.group);
         if (tank.group == Group.GOOD) {
             new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
         }

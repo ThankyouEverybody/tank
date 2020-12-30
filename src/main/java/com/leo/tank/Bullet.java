@@ -1,5 +1,10 @@
 package com.leo.tank;
 
+import com.leo.tank.abstractfactory.BaseBullet;
+import com.leo.tank.abstractfactory.BaseTank;
+import com.leo.tank.abstractfactory.DefaultFactory;
+import com.leo.tank.abstractfactory.GameFactory;
+
 import java.awt.*;
 
 /**
@@ -8,8 +13,9 @@ import java.awt.*;
  * @DATE 2020/12/24 10:37 上午
  * @Description 炮弹
  */
-public class Bullet {
+public class Bullet extends BaseBullet {
 
+    GameFactory gameFactory = DefaultFactory.getInstance();
     /**
      * 移动速度
      */
@@ -17,7 +23,7 @@ public class Bullet {
     /**
      * 宽度
      */
-    public static final int WIDTH  = ResourceMgr.bulletD.getWidth();
+    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     /**
      * 高度
      */
@@ -69,7 +75,7 @@ public class Bullet {
         this.group = group;
     }
 
-
+    @Override
     public void paint(Graphics g) {
         if (!live) {
             tankFrame.bullets.remove(this);
@@ -99,7 +105,7 @@ public class Bullet {
                 x -= SPEED;
                 break;
             case UP:
-                y -=SPEED;
+                y -= SPEED;
                 break;
             case RIGHT:
                 x += SPEED;
@@ -119,11 +125,8 @@ public class Bullet {
             live = false;
         }
     }
-    /**
-     * 子弹与坦克相撞
-     * 碰撞检测
-     */
-    public void collideWith(Tank tank) {
+    @Override
+    public void collideWith(BaseTank tank) {
         if (this.group == tank.group) {
             return;
         }
@@ -132,11 +135,11 @@ public class Bullet {
             tank.die();
             int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            tankFrame.explodes.add(new Explode(eX, eY, tankFrame));
+            tankFrame.explodes.add(gameFactory.createExplode(eX, eY, tankFrame));
         }
     }
-
-    private void die() {
+    @Override
+    protected void die() {
         this.live = false;
     }
 }

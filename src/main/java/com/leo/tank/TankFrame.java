@@ -1,5 +1,9 @@
 package com.leo.tank;
 
+import com.leo.tank.abstractfactory.BaseExplode;
+import com.leo.tank.abstractfactory.BaseTank;
+import com.leo.tank.abstractfactory.DefaultFactory;
+import com.leo.tank.abstractfactory.GameFactory;
 import com.leo.tank.strategy.DefaultFireStrategy;
 import com.leo.tank.strategy.FourDirFireStrategy;
 
@@ -18,13 +22,15 @@ import java.util.List;
  * @Description 封装继承多态 哈哈
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 400, Dir.DOWN, this,Group.GOOD);
+    GameFactory gameFactory = DefaultFactory.getInstance();
+
+    BaseTank myTank = gameFactory.createTank(200, 400, Dir.DOWN, this,Group.GOOD);
 
     List<Bullet> bullets = new ArrayList<>();
 
     List<Tank> tanks = new ArrayList<>();
 
-    List<Explode> explodes = new ArrayList<>();
+    List<BaseExplode> explodes = new ArrayList<>();
 
     static final int GAME_WIDTH = Integer.parseInt((String) (PropertyMgr.get("gameWidth")));
 

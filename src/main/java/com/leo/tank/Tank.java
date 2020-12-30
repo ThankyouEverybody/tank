@@ -1,5 +1,6 @@
 package com.leo.tank;
 
+import com.leo.tank.abstractfactory.BaseTank;
 import com.leo.tank.strategy.DefaultFireStrategy;
 import com.leo.tank.strategy.FireStrategy;
 
@@ -13,7 +14,7 @@ import java.util.Random;
  * @DATE 2020/12/24 9:54 上午
  * @Description 坦克封装
  */
-public class Tank {
+public class Tank extends BaseTank {
 
     /**
      * 位置坐标
@@ -56,10 +57,6 @@ public class Tank {
      * 坦克分组
      */
     public Group group;
-    /**
-     * 用于碰撞检测
-     */
-    protected Rectangle rect = new Rectangle();
 
     public Tank(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
         this.x = x;
@@ -73,69 +70,49 @@ public class Tank {
         rect.width = WIDTH;
         rect.height = HEIGHT;
     }
-
+    @Override
     public void setDir(Dir dir) {
         this.dir = dir;
     }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
+    @Override
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
-
+    @Override
     public int getX() {
         return x;
     }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
+    @Override
     public int getY() {
         return y;
     }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    @Override
     public Group getGroup() {
         return group;
     }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-
-
-    /**
-     * 画坦克
-     */
+    @Override
     public void paint(Graphics g) {
         if (!live) {
             tankFrame.tanks.remove(this);
             return;
         }
-        switch(dir) {
+        switch (dir) {
             case LEFT:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
         }
         move(dir);
     }
+
     /**
      * 坦克移动
      */
@@ -220,10 +197,11 @@ public class Tank {
      * @return void
      * @param fireStrategy
      */
+    @Override
     public void fire(FireStrategy fireStrategy) {
         fireStrategy.fire(this);
     }
-
+    @Override
     public void die() {
         this.live = false;
     }

@@ -1,5 +1,7 @@
 package com.leo.tank;
 
+import com.leo.tank.abstractfactory.BaseExplode;
+
 import java.awt.*;
 
 /**
@@ -8,7 +10,7 @@ import java.awt.*;
  * @DATE 2020/12/24 10:37 上午
  * @Description 爆炸
  */
-public class Explode {
+public class Explode extends BaseExplode {
 
     /**
      * 宽度
@@ -42,6 +44,7 @@ public class Explode {
     }
 
 
+    @Override
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {

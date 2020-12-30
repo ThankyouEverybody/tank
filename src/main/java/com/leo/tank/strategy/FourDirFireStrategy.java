@@ -1,6 +1,8 @@
 package com.leo.tank.strategy;
 
 import com.leo.tank.*;
+import com.leo.tank.abstractfactory.DefaultFactory;
+import com.leo.tank.abstractfactory.GameFactory;
 
 /**
  * @author Leo
@@ -21,6 +23,7 @@ public class FourDirFireStrategy implements FireStrategy {
         return FourDirFireStrategyHolder.fireStrategy;
     }
 
+    GameFactory gameFactory = DefaultFactory.getInstance();
 
     @Override
     public void fire(Tank tank) {
@@ -29,7 +32,7 @@ public class FourDirFireStrategy implements FireStrategy {
 
         Dir[] dirs = Dir.values();
         for(Dir dir : dirs) {
-            new Bullet(bX, bY, dir, tank.tankFrame, tank.group);
+            gameFactory.createBullet(bX, bY, dir, tank.tankFrame, tank.group);
         }
 
         if(tank.group == Group.GOOD) {
