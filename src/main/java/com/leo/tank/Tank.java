@@ -1,5 +1,6 @@
 package com.leo.tank;
 
+import com.leo.tank.facade.GameModel;
 import com.leo.tank.strategy.DefaultFireStrategy;
 import com.leo.tank.strategy.FireStrategy;
 

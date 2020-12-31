@@ -1,4 +1,6 @@
-package com.leo.tank;
+package com.leo.tank.facade;
+
+import com.leo.tank.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class GameModel {
 
     private static GameModel gameModel;
 
-    public Tank myTank = new Tank(200, 400, Dir.DOWN, this,Group.GOOD);
+    public Tank myTank = new Tank(200, 400, Dir.DOWN, this, Group.GOOD);
 
     public List<Bullet> bullets = new ArrayList<>();
 
@@ -40,7 +42,7 @@ public class GameModel {
      * 功能描述 : DCL
      * @author Leo
      * @date 2020/12/31 11:13 上午
-     * @return com.leo.tank.GameModel
+     * @return com.leo.tank.facade.GameModel
      */
     public static  GameModel getInstance(){
         if (gameModel == null) {

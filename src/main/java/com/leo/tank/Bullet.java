@@ -1,5 +1,7 @@
 package com.leo.tank;
 
+import com.leo.tank.facade.GameModel;
+
 import java.awt.*;
 
 /**

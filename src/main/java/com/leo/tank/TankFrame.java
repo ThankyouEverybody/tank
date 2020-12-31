@@ -1,5 +1,6 @@
 package com.leo.tank;
 
+import com.leo.tank.facade.GameModel;
 import com.leo.tank.strategy.DefaultFireStrategy;
 import com.leo.tank.strategy.FourDirFireStrategy;
 
@@ -8,8 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Leo
