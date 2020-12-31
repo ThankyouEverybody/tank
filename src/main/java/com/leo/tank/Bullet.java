@@ -46,19 +46,23 @@ public class Bullet {
      * 用于碰撞检测
      */
     Rectangle rect = new Rectangle();
+    /**
+     * 门面
+     */
+    GameModel gameModel;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
+    public Bullet(int x, int y, Dir dir, GameModel gm, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tankFrame = tankFrame;
+        this.gameModel = gm;
         this.group = group;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
         //每次new一个子弹的时候直接加入到bullets中.
-        tankFrame.bullets.add(this);
+        gameModel.bullets.add(this);
     }
 
     public Group getGroup() {
@@ -72,7 +76,7 @@ public class Bullet {
 
     public void paint(Graphics g) {
         if (!live) {
-            tankFrame.bullets.remove(this);
+            gameModel.bullets.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -132,7 +136,7 @@ public class Bullet {
             tank.die();
             int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            tankFrame.explodes.add(new Explode(eX, eY, tankFrame));
+            gameModel.explodes.add(new Explode(eX, eY, tank.gameModel));
         }
     }
 

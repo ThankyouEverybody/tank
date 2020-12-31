@@ -27,15 +27,14 @@ public class Explode {
      */
     protected boolean live = true;
     /**
-     * 当前frame的引用
+     * 门面
      */
-    private TankFrame tankFrame = null;
-
+    private GameModel gameModel;
     private int step = 0;
-    public Explode(int x, int y, TankFrame tankFrame) {
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tankFrame = tankFrame;
+        this.gameModel = gm;
 //        new Thread(() -> new Audio("audio/explode.wav").play()).start();
 
         ;
@@ -45,7 +44,7 @@ public class Explode {
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {
-            tankFrame.explodes.remove(this);
+            gameModel.explodes.remove(this);
         }
 
     }

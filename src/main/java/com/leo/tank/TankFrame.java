@@ -18,13 +18,10 @@ import java.util.List;
  * @Description 封装继承多态 哈哈
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 400, Dir.DOWN, this,Group.GOOD);
 
-    List<Bullet> bullets = new ArrayList<>();
+    GameModel gameModel = GameModel.getInstance();
 
-    List<Tank> tanks = new ArrayList<>();
 
-    List<Explode> explodes = new ArrayList<>();
 
     static final int GAME_WIDTH = Integer.parseInt((String) (PropertyMgr.get("gameWidth")));
 
@@ -71,48 +68,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color color = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹数量:" + bullets.size(), 10, 60);
-        g.drawString("敌人数量:" + tanks.size(), 10, 80);
-        g.drawString("爆炸数量:" + explodes.size(), 10, 100);
-        g.setColor(color);
-        myTank.paint(g);
-
-        /**
-         * 这种方式在删除子弹的时候回出现
-         * java.util.ConcurrentModificationException
-         */
-        /*for (Bullet bullet : bullets) {
-            bullet.paint(g);
-        }*/
-        //解决方法1,使用普通for方式
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(g);
-        }
-        //解决方法2,使用迭代器自己的iterator.remove()
-        /*for (Iterator<Bullet> iterator = bullets.iterator(); iterator.hasNext(); ) {
-            Bullet next = iterator.next();
-            if (!next.live) {
-                iterator.remove();
-            }
-        }*/
-
-        //敌人坦克
-        for (int i = 0; i < tanks.size(); i++) {
-            tanks.get(i).paint(g);
-        }
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
-        }
-
-        //碰撞监测
-        for (int i = 0; i < bullets.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                bullets.get(i).collideWith(tanks.get(j));
-            }
-        }
-
+        gameModel.paint(g);
     }
 
     /**
@@ -179,13 +135,13 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_SPACE:
-                    myTank.fire(DefaultFireStrategy.getInstance());
+                    gameModel.getMyTank().fire(DefaultFireStrategy.getInstance());
                     break;
                 case KeyEvent.VK_META:
-                    myTank.fire(FourDirFireStrategy.getInstance());
+                    gameModel.getMyTank().fire(FourDirFireStrategy.getInstance());
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire(FourDirFireStrategy.getInstance());
+                    gameModel.getMyTank().fire(FourDirFireStrategy.getInstance());
                     break;
                 default:
                     break;
@@ -195,22 +151,22 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if (!bL && !bU && !bR && !bD) {
-                myTank.setMoving(false);
+                gameModel.getMyTank().setMoving(false);
                 return;
             }
-            myTank.setMoving(true);
+            gameModel.getMyTank().setMoving(true);
 
             if (bL) {
-                myTank.setDir(Dir.LEFT);
+                gameModel.getMyTank().setDir(Dir.LEFT);
             }
             if (bU) {
-                myTank.setDir(Dir.UP);
+                gameModel.getMyTank().setDir(Dir.UP);
             }
             if (bR) {
-                myTank.setDir(Dir.RIGHT);
+                gameModel.getMyTank().setDir(Dir.RIGHT);
             }
             if (bD) {
-                myTank.setDir(Dir.DOWN);
+                gameModel.getMyTank().setDir(Dir.DOWN);
             }
 
         }

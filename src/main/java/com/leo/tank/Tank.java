@@ -60,12 +60,16 @@ public class Tank {
      * 用于碰撞检测
      */
     protected Rectangle rect = new Rectangle();
+    /**
+     * 门面
+     */
+    public GameModel gameModel;
 
-    public Tank(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
+    public Tank(int x, int y, Dir dir, GameModel gm, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tankFrame = tankFrame;
+        this.gameModel = gm;
         this.group = group;
 
         rect.x = this.x;
@@ -117,7 +121,7 @@ public class Tank {
      */
     public void paint(Graphics g) {
         if (!live) {
-            tankFrame.tanks.remove(this);
+            gameModel.tanks.remove(this);
             return;
         }
         switch(dir) {
