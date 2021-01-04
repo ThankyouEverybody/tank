@@ -14,13 +14,8 @@ import java.util.Random;
  * @DATE 2020/12/24 9:54 上午
  * @Description 坦克封装
  */
-public class Tank {
+public class Tank extends GameObject {
 
-    /**
-     * 位置坐标
-     */
-    public int  x;
-    public int y;
     /**
      * 方向
      */
@@ -36,7 +31,7 @@ public class Tank {
     /**
      * 宽度
      */
-    public static final int WIDTH  = ResourceMgr.goodTankL.getWidth();
+    public static final int WIDTH = ResourceMgr.goodTankL.getWidth();
     /**
      * 高度
      */
@@ -60,7 +55,7 @@ public class Tank {
     /**
      * 用于碰撞检测
      */
-    protected Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
     /**
      * 门面
      */
@@ -116,31 +111,32 @@ public class Tank {
     }
 
 
-
     /**
      * 画坦克
      */
+    @Override
     public void paint(Graphics g) {
         if (!live) {
-            gameModel.tanks.remove(this);
+            gameModel.remove(this);
             return;
         }
-        switch(dir) {
+        switch (dir) {
             case LEFT:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
         }
         move(dir);
     }
+
     /**
      * 坦克移动
      */
@@ -157,7 +153,7 @@ public class Tank {
                 x -= SPEED;
                 break;
             case UP:
-                y -=SPEED;
+                y -= SPEED;
                 break;
             case RIGHT:
                 x += SPEED;
@@ -186,11 +182,12 @@ public class Tank {
 
     /**
      * 功能描述 : 坦克边界监测
+     *
+     * @param
+     * @return void
      * @author Leo
      * @date 2020/12/26 9:12 下午
-     * @param
      * @throw
-     * @return void
      */
     private void boundsCheck() {
         if (this.x < 0) {
@@ -210,20 +207,22 @@ public class Tank {
 
     /**
      * 功能描述 : 随机方向
+     *
+     * @return void
      * @author Leo
      * @date 2020/12/26 8:57 下午
-     * @return void
      */
-    private void randomDir() {
+    public void randomDir() {
         this.dir = Dir.values()[random.nextInt(4)];
     }
 
     /**
      * 功能描述 : 开火
+     *
+     * @param fireStrategy
+     * @return void
      * @author Leo
      * @date 2020/12/24 2:04 下午
-     * @return void
-     * @param fireStrategy
      */
     public void fire(FireStrategy fireStrategy) {
         fireStrategy.fire(this);
@@ -232,4 +231,6 @@ public class Tank {
     public void die() {
         this.live = false;
     }
+
+
 }

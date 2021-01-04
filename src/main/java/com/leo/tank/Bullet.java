@@ -10,7 +10,7 @@ import java.awt.*;
  * @DATE 2020/12/24 10:37 上午
  * @Description 炮弹
  */
-public class Bullet {
+public class Bullet extends GameObject{
 
     /**
      * 移动速度
@@ -25,10 +25,6 @@ public class Bullet {
      */
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
     /**
-     * 位置坐标
-     */
-    private int x, y;
-    /**
      * 方向
      */
     private Dir dir;
@@ -37,21 +33,17 @@ public class Bullet {
      */
     protected boolean live = true;
     /**
-     * 当前frame的引用
-     */
-    private TankFrame tankFrame = null;
-    /**
      * 子弹分组
      */
-    protected Group group;
+    public Group group;
     /**
      * 用于碰撞检测
      */
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
     /**
      * 门面
      */
-    GameModel gameModel;
+    public GameModel gameModel;
 
     public Bullet(int x, int y, Dir dir, GameModel gm, Group group) {
         this.x = x;
@@ -64,7 +56,7 @@ public class Bullet {
         rect.width = WIDTH;
         rect.height = HEIGHT;
         //每次new一个子弹的时候直接加入到bullets中.
-        gameModel.bullets.add(this);
+        gameModel.add(this);
     }
 
     public Group getGroup() {
@@ -76,9 +68,10 @@ public class Bullet {
     }
 
 
+    @Override
     public void paint(Graphics g) {
         if (!live) {
-            gameModel.bullets.remove(this);
+            gameModel.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -125,24 +118,9 @@ public class Bullet {
             live = false;
         }
     }
-    /**
-     * 子弹与坦克相撞
-     * 碰撞检测
-     */
-    public void collideWith(Tank tank) {
-        if (this.group == tank.group) {
-            return;
-        }
-        if (rect.intersects(tank.rect)) {
-            this.die();
-            tank.die();
-            int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            gameModel.explodes.add(new Explode(eX, eY, tank.gameModel));
-        }
-    }
 
-    private void die() {
+
+    public void die() {
         this.live = false;
     }
 }

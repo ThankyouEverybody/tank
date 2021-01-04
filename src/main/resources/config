@@ -4,3 +4,5 @@ tankSpeed=5
 bulletSpeed=10
 gameWidth=1080
 gameHeight=720
+#colliders
+colliders=com.leo.tank.cor.BulletTankCollider,com.leo.tank.cor.TankTankCollider

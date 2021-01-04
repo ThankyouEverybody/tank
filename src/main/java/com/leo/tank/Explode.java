@@ -10,20 +10,16 @@ import java.awt.*;
  * @DATE 2020/12/24 10:37 上午
  * @Description 爆炸
  */
-public class Explode {
+public class Explode extends GameObject {
 
     /**
      * 宽度
      */
-    public static final int WIDTH  = ResourceMgr.explodes[0].getWidth();
+    public static final int WIDTH = ResourceMgr.explodes[0].getWidth();
     /**
      * 高度
      */
     public static final int HEIGHT = ResourceMgr.explodes[0].getHeight();
-    /**
-     * 位置坐标
-     */
-    private int x, y;
     /**
      * 是否存活
      */
@@ -33,6 +29,7 @@ public class Explode {
      */
     private GameModel gameModel;
     private int step = 0;
+
     public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
@@ -42,11 +39,11 @@ public class Explode {
         ;
     }
 
-
+    @Override
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {
-            gameModel.explodes.remove(this);
+            gameModel.remove(this);
         }
 
     }
