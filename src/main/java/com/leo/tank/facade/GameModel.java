@@ -22,7 +22,11 @@ public class GameModel {
 
     private static GameModel gameModel;
 
-    public Tank myTank = new Tank(200, 400, Dir.DOWN, this, Group.GOOD);
+    static {
+        init();
+    }
+
+    private static Tank myTank;
 
     /* 由调停者 gameObjectList 代替
     public List<Bullet> bullets = new ArrayList<>();
@@ -45,14 +49,23 @@ public class GameModel {
      * @date 2020/12/31 11:13 上午
      */
     private GameModel() {
-        int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
 
-        //初始化敌方坦克
-        for (int i = 0; i < initTankCount; i++) {
-            this.add(new Tank(50 + i * 80, 50, Dir.DOWN, this, Group.BAD));
-        }
     }
 
+    private static void init() {
+        int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
+        myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD);
+        //初始化敌方坦克
+        for (int i = 0; i < initTankCount; i++) {
+            new Tank(50 + i * 80, 50, Dir.DOWN, Group.BAD);
+        }
+
+        //初始化墙
+        gameModel.add(new Wall(150, 150, 200, 50));
+        gameModel.add(new Wall(550, 150, 200, 50));
+        gameModel.add(new Wall(300, 300, 50, 200));
+        gameModel.add(new Wall(550, 300, 50, 200));
+    }
     /**
      * 功能描述 : DCL
      *
@@ -85,7 +98,7 @@ public class GameModel {
         g.drawString("敌人数量:" + tanks.size(), 10, 80);
         g.drawString("爆炸数量:" + explodes.size(), 10, 100);*/
         g.setColor(color);
-        myTank.paint(g);
+//        myTank.paint(g);
 
 
         //敌人坦克
@@ -101,11 +114,6 @@ public class GameModel {
                 colliderChain.collide(o1, o2);
             }
         }
-        /*for (int i = 0; i < bullets.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                bullets.get(i).collideWith(tanks.get(j));
-            }
-        }*/
     }
     /**
      * 功能描述 : 获取主坦克
@@ -124,7 +132,7 @@ public class GameModel {
      * @return void
      */
     public void remove(GameObject o) {
-        this.gameObjectList.remove(o);
+        gameObjectList.remove(o);
     }
     /**
      * 功能描述 : 添加GameObject
@@ -134,6 +142,6 @@ public class GameModel {
      * @return void
      */
     public void add(GameObject o) {
-        this.gameObjectList.add(o);
+        gameObjectList.add(o);
     }
 }

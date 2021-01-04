@@ -40,23 +40,21 @@ public class Bullet extends GameObject{
      * 用于碰撞检测
      */
     public Rectangle rect = new Rectangle();
-    /**
-     * 门面
-     */
-    public GameModel gameModel;
 
-    public Bullet(int x, int y, Dir dir, GameModel gm, Group group) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gameModel = gm;
         this.group = group;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
         //每次new一个子弹的时候直接加入到bullets中.
-        gameModel.add(this);
+        /**
+         * 调停者
+         */
+        GameModel.getInstance().add(this);
     }
 
     public Group getGroup() {
@@ -71,7 +69,7 @@ public class Bullet extends GameObject{
     @Override
     public void paint(Graphics g) {
         if (!live) {
-            gameModel.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:

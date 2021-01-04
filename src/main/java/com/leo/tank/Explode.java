@@ -24,26 +24,25 @@ public class Explode extends GameObject {
      * 是否存活
      */
     protected boolean live = true;
-    /**
-     * 门面
-     */
-    private GameModel gameModel;
+
     private int step = 0;
 
-    public Explode(int x, int y, GameModel gm) {
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gameModel = gm;
 //        new Thread(() -> new Audio("audio/explode.wav").play()).start();
-
-        ;
+        //门面
+        GameModel.getInstance().add(this);
     }
 
     @Override
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {
-            gameModel.remove(this);
+            /**
+             * 调停者
+             */
+            GameModel.getInstance().remove(this);
         }
 
     }

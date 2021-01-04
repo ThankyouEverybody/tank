@@ -36,7 +36,7 @@ public class BulletTankCollider implements Collider {
                 tank.die();
                 int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
                 int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-                bullet.gameModel.add(new Explode(eX, eY, tank.gameModel));
+                new Explode(eX, eY);
                 //已经撞上了 就不继续检测坦克之间的碰撞
                 return false;
             }

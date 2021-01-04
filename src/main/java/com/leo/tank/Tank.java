@@ -56,22 +56,19 @@ public class Tank extends GameObject {
      * 用于碰撞检测
      */
     public Rectangle rect = new Rectangle();
-    /**
-     * 门面
-     */
-    public GameModel gameModel;
 
-    public Tank(int x, int y, Dir dir, GameModel gm, Group group) {
+    private int oldX,oldY;
+    public Tank(int x, int y, Dir dir,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gameModel = gm;
         this.group = group;
-
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        //门面
+        GameModel.getInstance().add(this);
     }
 
     public void setDir(Dir dir) {
@@ -117,8 +114,10 @@ public class Tank extends GameObject {
     @Override
     public void paint(Graphics g) {
         if (!live) {
-            gameModel.remove(this);
-            return;
+            /**
+             * 调停者
+             */
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -141,6 +140,9 @@ public class Tank extends GameObject {
      * 坦克移动
      */
     private void move(Dir dir) {
+        //记录之前的位置
+        oldX = this.x;
+        oldY = this.y;
         if (!moving) {
             return;
         }
@@ -178,6 +180,17 @@ public class Tank extends GameObject {
         //update  rect
         rect.x = this.x;
         rect.y = this.y;
+    }
+
+    /**
+     * 功能描述 : 回到之前的位置
+     * @author Leo
+     * @date 2021/1/4 3:27 下午
+     * @return void
+     */
+    public void back() {
+        this.x = oldX;
+        this.y = oldY;
     }
 
     /**
