@@ -7,6 +7,7 @@ import java.awt.*;
  * @ClassName GameObject
  * @DATE 2020/12/31 3:44 下午
  * @Description Mediator 调停者
+ * 9-3
  */
 public abstract class GameObject {
 
