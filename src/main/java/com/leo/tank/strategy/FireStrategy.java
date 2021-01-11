@@ -6,7 +6,7 @@ import com.leo.tank.Tank;
  * @author Leo
  * @ClassName FireStrategy
  * @DATE 2020/12/28 3:20 下午
- * @Description fire接口
+ * @Description fire接口 策略模式
  */
 public interface FireStrategy {
 

@@ -1,5 +1,7 @@
 package com.leo.tank;
 
+import com.leo.tank.observer.TankFireEvent;
+
 import java.awt.*;
 
 /**
@@ -41,5 +43,4 @@ public abstract class GameObject {
      * @date 2021/1/11 5:32 下午
      */
     public abstract int getHeight();
-
 }

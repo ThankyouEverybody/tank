@@ -1,10 +1,15 @@
 package com.leo.tank;
 
 import com.leo.tank.facade.GameModel;
+import com.leo.tank.observer.TankFireEvent;
+import com.leo.tank.observer.TankFireHandler;
+import com.leo.tank.observer.TankFireObserver;
 import com.leo.tank.strategy.DefaultFireStrategy;
 import com.leo.tank.strategy.FireStrategy;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 
@@ -57,6 +62,7 @@ public class Tank extends GameObject {
      */
     public Rectangle rect = new Rectangle();
 
+    private List<TankFireObserver> tankFireObserverList = Arrays.asList(new TankFireHandler());
     private int oldX,oldY;
     public Tank(int x, int y, Dir dir,Group group) {
         this.x = x;
@@ -255,4 +261,11 @@ public class Tank extends GameObject {
     }
 
 
+    public void handleFireKye(FireStrategy fireStrategy) {
+        TankFireEvent event = new TankFireEvent(fireStrategy, this);
+        for (TankFireObserver observer : tankFireObserverList) {
+            observer.actionFire(event);
+        }
+
+    }
 }

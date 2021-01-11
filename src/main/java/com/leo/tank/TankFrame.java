@@ -1,6 +1,7 @@
 package com.leo.tank;
 
 import com.leo.tank.facade.GameModel;
+import com.leo.tank.observer.TankFireEvent;
 import com.leo.tank.strategy.DefaultFireStrategy;
 import com.leo.tank.strategy.FourDirFireStrategy;
 
@@ -41,6 +42,7 @@ public class TankFrame extends Frame {
         });
         this.addKeyListener(new MyKeyListener());
     }
+
 
     Image offScreenImage = null;
 
@@ -135,13 +137,22 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_SPACE:
-                    gameModel.getMyTank().fire(DefaultFireStrategy.getInstance());
+                    //观察者模式
+                    gameModel.getMyTank().handleFireKye(DefaultFireStrategy.getInstance());
+                    //策略模式
+                    //gameModel.getMyTank().fire(DefaultFireStrategy.getInstance());
                     break;
                 case KeyEvent.VK_META:
-                    gameModel.getMyTank().fire(FourDirFireStrategy.getInstance());
+                    //观察者模式
+                    gameModel.getMyTank().handleFireKye(FourDirFireStrategy.getInstance());
+                    //策略模式
+                    //gameModel.getMyTank().fire(FourDirFireStrategy.getInstance());
                     break;
                 case KeyEvent.VK_CONTROL:
-                    gameModel.getMyTank().fire(FourDirFireStrategy.getInstance());
+                    //观察者模式
+                    gameModel.getMyTank().handleFireKye(FourDirFireStrategy.getInstance());
+                    //策略模式
+                    //gameModel.getMyTank().fire(FourDirFireStrategy.getInstance());
                     break;
                 default:
                     break;

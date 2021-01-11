@@ -17,5 +17,6 @@ public abstract class GODecorator extends GameObject {
         this.gameObject = gameObject;
     }
 
+    @Override
     public abstract void paint(Graphics g);
 }

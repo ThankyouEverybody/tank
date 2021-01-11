@@ -8,4 +8,6 @@ gameHeight=720
 colliders=com.leo.tank.cor.BulletTankCollider,\
 com.leo.tank.cor.TankTankCollider,\
 com.leo.tank.cor.BulletWallCollider,\
-com.leo.tank.cor.TankWallCollider,\
+com.leo.tank.cor.TankWallCollider
+
+observer=com.leo.tank.observer.TankFireHandler

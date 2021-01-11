@@ -11,7 +11,8 @@ import java.util.List;
  * @author Leo
  * @ClassName ColliderChain
  * @DATE 2021/1/4 2:20 下午
- * @Description 碰撞检测链
+ * @Description 责任链模式
+ * 碰撞检测链
  * 1.实现了Collider接口可以将两个链在继续串起来
  */
 public class ColliderChain implements Collider {

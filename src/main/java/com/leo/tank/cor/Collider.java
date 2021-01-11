@@ -7,7 +7,7 @@ import com.leo.tank.GameObject;
  * @ClassName Collider
  * @DATE 2020/12/31 4:08 下午
  * @Description 碰撞器
- * 8-3
+ *
  */
 public interface Collider {
 

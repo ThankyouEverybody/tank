@@ -27,7 +27,7 @@ public class GameModel {
         init();
     }
 
-    private static Tank myTank;
+    public static Tank myTank;
 
     /* 由调停者 gameObjectList 代替
     public List<Bullet> bullets = new ArrayList<>();
@@ -52,6 +52,7 @@ public class GameModel {
     private GameModel() {
 
     }
+
 
     private static void init() {
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
@@ -146,4 +147,6 @@ public class GameModel {
     public void add(GameObject o) {
         gameObjectList.add(o);
     }
+
+
 }
