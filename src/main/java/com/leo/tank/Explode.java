@@ -27,6 +27,15 @@ public class Explode extends GameObject {
 
     private int step = 0;
 
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
     public Explode(int x, int y) {
         this.x = x;
         this.y = y;

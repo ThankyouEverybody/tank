@@ -17,7 +17,7 @@ public class Main {
         //new Thread(()->new Audio("audio/war1.wav").loop()).start();
         while (true) {
             try {
-                Thread.sleep(25);
+                Thread.sleep(30);
                 tankFrame.repaint();
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -5,6 +5,7 @@ import com.leo.tank.cor.BulletTankCollider;
 import com.leo.tank.cor.Collider;
 import com.leo.tank.cor.ColliderChain;
 import com.leo.tank.cor.TankTankCollider;
+import com.leo.tank.decorator.RectDecorator;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class GameModel {
     private static void init() {
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
         myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD);
+
         //初始化敌方坦克
         for (int i = 0; i < initTankCount; i++) {
             new Tank(50 + i * 80, 50, Dir.DOWN, Group.BAD);

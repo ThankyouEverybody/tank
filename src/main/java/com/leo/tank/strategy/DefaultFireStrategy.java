@@ -4,6 +4,9 @@ import com.leo.tank.Audio;
 import com.leo.tank.Bullet;
 import com.leo.tank.Group;
 import com.leo.tank.Tank;
+import com.leo.tank.decorator.RectDecorator;
+import com.leo.tank.decorator.TailDecorator;
+import com.leo.tank.facade.GameModel;
 
 /**
  * @author Leo
@@ -39,6 +42,7 @@ public class DefaultFireStrategy implements FireStrategy {
     public void fire(Tank tank) {
         int bX = tank.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = tank.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        //BUG new Bullet又把自己添加了一遍
         new Bullet(bX, bY, tank.dir, tank.group);
         if (tank.group == Group.GOOD) {
             new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();

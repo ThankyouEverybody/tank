@@ -7,7 +7,7 @@ import java.awt.*;
  * @ClassName GameObject
  * @DATE 2020/12/31 3:44 下午
  * @Description Mediator 调停者
- * 9-3
+ *
  */
 public abstract class GameObject {
 
@@ -24,5 +24,22 @@ public abstract class GameObject {
      * @return void
      */
     public abstract void paint(Graphics g);
+
+    /**
+     * 功能描述 : getWidth
+     * @return int
+     * @author Leo
+     * @date 2021/1/11 5:32 下午
+     */
+    public abstract int getWidth();
+
+    /**
+     * 功能描述 : getHeight
+     *
+     * @return int
+     * @author Leo
+     * @date 2021/1/11 5:32 下午
+     */
+    public abstract int getHeight();
 
 }
