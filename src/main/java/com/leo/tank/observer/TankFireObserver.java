@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @ClassName TankFireObserver
  * @DATE 2021/1/11 7:54 下午
  * @Description Observer 观察者模式
- * 10-3
+ * 15
  */
 public interface TankFireObserver extends Serializable {
     /**
